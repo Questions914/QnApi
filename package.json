@@ -1,0 +1,11 @@
+{
+  "name": "qnapi",
+  "version": "1.0.0",
+  "description": "Client API for accessing the Smickr Q&A server API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
