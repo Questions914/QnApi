@@ -1,4 +1,4 @@
-class VideoRecorder {
+export class VideoRecorder {
     constructor(elementToInsertInto, width, height, onRecordingComplete) {
         const self = this;
 
@@ -92,5 +92,3 @@ class VideoRecorder {
         this.mediaRecorder = null;
     }
 }
-
-export * from VideoRecorder;
