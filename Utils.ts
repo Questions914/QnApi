@@ -1,5 +1,13 @@
+export type QnaException = {
+    fetchApiExp: boolean;
+    status: number;
+    msg: string;
+}
+
+export type Handlers = { [key:number]: (exception: QnaException) => any }
+
 class UtilsClass {
-    async fetchApi(verb, path, requestBody, requestContentType) {
+    async fetchApi(verb: string, path: string, requestBody?: any, requestContentType?: string) {
         let api_url_root = this.getApiUrlRoot();
         let url = api_url_root + path;
 
@@ -9,7 +17,7 @@ class UtilsClass {
 
         console.log(`Fetch: ${verb} ${url}`);
 
-        let options = {
+        let options: any = {
             method: verb,
             cache: "no-store", // don't cache cache busted cache busters
             headers: { 
@@ -37,7 +45,7 @@ class UtilsClass {
         console.log(`Fetch Status: ${response.status}`);
     
         if (response.status == 401) {
-            this.setBearerToken(null);
+            this.setBearerToken("");
         } else {
             const new_bearer_token = response.headers.get("set-bearer-token");
             if (new_bearer_token)
@@ -62,7 +70,7 @@ class UtilsClass {
             return await response.blob();
     }
 
-    setBearerToken(token) {
+    setBearerToken(token: string) {
         window.localStorage.setItem("bearerToken", token);
     }
 
@@ -73,7 +81,7 @@ class UtilsClass {
         return bearer_token;
     }
 
-    setApiUrlRoot(root) {
+    setApiUrlRoot(root: string) {
         window.localStorage.setItem("apiUrlRoot", root);
     }
 
@@ -82,15 +90,16 @@ class UtilsClass {
         if (apiUrlRoot == "null")
             apiUrlRoot = null;
         if (!apiUrlRoot)
-            apiUrlRoot = "https://devapi.smickr.com/"; // FORNOW
+            apiUrlRoot = "https://api.smickr.com/";
         return apiUrlRoot;
     }
 
-    async handleExp(exp, handlers) {
-        const status = exp.status ? exp.status : 0;
+    async handleExp(exp: any, handlers: Handlers) {
+        const response = exp instanceof Response ? exp as Response : null;
+        const status = response && null && response.status ? response.status : 0;
 
         let msg;
-        if (status)
+        if (status && response != null)
         {
             switch (status)
             {
@@ -99,7 +108,7 @@ class UtilsClass {
                 case 415: msg = "Unsupported content type"; break;
                 case 500: msg = "Server error"; break;
                 default: 
-                    msg = await exp.text(); 
+                    msg = await response.text(); 
                     console.log(`Raw error msg: ${msg}`);
                     if (msg.length > 0 && msg[0] == '{') {
                         try {
@@ -120,8 +129,7 @@ class UtilsClass {
             console.log(`handleExp (not response): ${msg}`);
         }
         
-        const our_exp = 
-        { 
+        const our_exp: QnaException = { 
             fetchApiExp: true, 
             status: status, 
             msg: msg 
@@ -132,7 +140,7 @@ class UtilsClass {
             return our_exp;
         }
 
-        if (status) { // exp is a response
+        if (response) {
             const status_handler = handlers[status];
             if (status_handler) {
                 console.log("Specific status handler found");
@@ -146,7 +154,7 @@ class UtilsClass {
             }
         }
 
-        const exp_handler = handlers[null];
+        const exp_handler = handlers[-1];
         if (exp_handler) {
             console.log("Exception handler found");
             return exp_handler(our_exp);
@@ -156,15 +164,24 @@ class UtilsClass {
         return our_exp;
     }
 }
-
 export const Utils = new UtilsClass();
 
-export function encu(param) {
-    return encodeURIComponent(param);
+export function encu(param: any) {
+    return encodeURIComponent(param.toString());
 }
 
-export function ench(param) {
+export function ench(param: string) {
     const p = document.createElement('P');
     p.textContent = param;
-    return p.innerHTML.replaceAll('\n', "<br>").replaceAll('\t', "&nbsp;&nbsp;").replaceAll(' ', "&nbsp;");
+    let str = p.innerHTML;
+    str = replaceAll(str, '\n', "<br>")
+    str = replaceAll(str, '\t', "&nbsp;&nbsp;")
+    str = replaceAll(str, ' ', "&nbsp;");
+    return str;
+}
+
+function replaceAll(str: string, toFind: string, replaceWith: string) {
+    while(str.includes(toFind))
+        str = str.replace(toFind, replaceWith);
+    return str;
 }

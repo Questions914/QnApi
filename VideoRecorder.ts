@@ -1,40 +1,48 @@
 export class VideoRecorder {
-    constructor(elementToInsertInto, width, height, onRecordingComplete) {
+    width: number = 0;
+    height: number = 0;
+
+    onRecordingComplete: (blob: Blob) => any;
+
+    mimeType: string = "";
+    
+    canvas: HTMLCanvasElement;
+    canvasCtxt: CanvasRenderingContext2D | null;
+
+    video: HTMLVideoElement;
+    videoStream: MediaStream | null;
+
+    mediaRecorder: MediaRecorder | null;
+    recordedChunks: Blob[] | null;
+
+    constructor(elementToInsertInto: HTMLElement, width: number, height: number, onRecordingComplete: (blob: Blob) => any) {
         const self = this;
+
+        this.width = width;
+        this.height = height;
 
         if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia)
             throw "Browser does not support video recording";
 
-        let mimeType;
         if (MediaRecorder.isTypeSupported("video/webm"))
-            mimeType = "video/webm";
+            this.mimeType = "video/webm";
         else if (MediaRecorder.isTypeSupported("video/mp4"))
-            mimeType = "video/mp4";
+        this.mimeType = "video/mp4";
         else
             throw "Browser does not support video formats";
-
-        this.options = {
-            audio: true, 
-            video: true, 
-
-            width: width, 
-            height: height,
-
-            mimeType: mimeType
-        };
 
         this.onRecordingComplete = onRecordingComplete;
 
         this.canvas = document.createElement("canvas");
-        this.canvas.width = width;
-        this.canvas.height = height;
+        this.canvas.width = this.width;
+        this.canvas.height = this.height;
         elementToInsertInto.appendChild(this.canvas);
 
         this.canvasCtxt = this.canvas.getContext("2d");
 
         this.video = document.createElement("video");
-        this.video.width = width;
-        this.video.height = height;
+        this.video.width = this.width;
+        this.video.height = this.height;
         this.video.setAttribute('autoplay', '');
         this.video.setAttribute('muted', '');
         this.video.setAttribute('playsinline', '');
@@ -44,20 +52,19 @@ export class VideoRecorder {
         this.mediaRecorder = null;
         this.recordedChunks = null;
         
-        navigator.mediaDevices.getUserMedia(this.options)
+        navigator.mediaDevices.getUserMedia({ audio: true, video: { width: this.width, height: this.height } })
             .then(function (stream) {
                 self.videoStream = stream;
                 self.video.srcObject = new MediaStream(stream.getVideoTracks());
                 self.onFrame();
             })
-            .catch(function (error) {
-                throw `Error capturing video: ${error}`;
-            });
+            .catch((error) => { throw `Error capturing video: ${error}` });
     }
 
     onFrame() {
         window.requestAnimationFrame(this.onFrame.bind(this));
-        this.canvasCtxt.drawImage(this.video, 0, 0, this.video.width, this.video.height);
+        if (this.canvasCtxt != null)
+            this.canvasCtxt.drawImage(this.video, 0, 0, this.video.width, this.video.height);
     }
 
     isRecording() {
@@ -65,29 +72,29 @@ export class VideoRecorder {
     }
     
     startRecording() {
-        if (this.isRecording())
+        const self = this;
+
+        if (self.isRecording() || this.videoStream == null)
             return;
 
         this.recordedChunks = [];
 
-        const self = this;
-
-        this.mediaRecorder = new MediaRecorder(this.videoStream, this.options);
+        this.mediaRecorder = new MediaRecorder(this.videoStream, { mimeType: self.mimeType });
         this.mediaRecorder.ondataavailable =
-            function (e) {
-                if (e.data.size > 0)
+            async function (e) {
+                if (e.data.size > 0 && self.recordedChunks != null)
                     self.recordedChunks.push(e.data);
             };
         this.mediaRecorder.onstop = 
             function () {
-                self.onRecordingComplete(new Blob(self.recordedChunks, { type: self.options.mimeType }));
+                self.onRecordingComplete(new Blob(self.recordedChunks as BlobPart[], { type: self.mimeType }));
             };
 
         this.mediaRecorder.start();
     }
 
     stopRecording() {
-        if (this.isRecording())
+        if (this.mediaRecorder != null && this.isRecording())
             this.mediaRecorder.stop();
         this.mediaRecorder = null;
     }

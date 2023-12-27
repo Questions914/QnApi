@@ -1,10 +1,10 @@
-import { Utils, encu } from "./Utils.js";
+import { Utils, Handlers, encu } from "./Utils.js";
 
 class UsersClass {
     // Get the public profile of another user
     // Errors:
     // 404: User not found
-    async getPublicProfile(username, handlers) {
+    async getPublicProfile(username: string, handlers: Handlers) {
         try {
             return await Utils.fetchApi("GET", `user/publicprofile/v1?username=${encu(username)}`);
         } catch (e) {
@@ -13,7 +13,7 @@ class UsersClass {
     }
 
     // Get stats about the user's own public profile
-    async getMyProfileStats(handlers) {
+    async getMyProfileStats(handlers: Handlers) {
         try {
             return await Utils.fetchApi("GET", `user/profilestats/v1`);
         } catch (e) {
@@ -26,7 +26,7 @@ class UsersClass {
     // Errors:
     // 400: Invalid username
     // 409: Username already taken
-    async isUsernameAvailable(username, handlers) {
+    async isUsernameAvailable(username: string, handlers: Handlers) {
         try {
             await Utils.fetchApi("GET", `user/usernameAvailable/v1?username=${encu(username)}`);
             return true;
@@ -36,7 +36,7 @@ class UsersClass {
     }
 
     // Get my notification feed
-    async getMyNotifications(handlers) {
+    async getMyNotifications(handlers: Handlers) {
         try {
             return await Utils.fetchApi("GET", `user/notifications/v1`);
         } catch (e) {
@@ -45,7 +45,7 @@ class UsersClass {
     }
 
     // Post a new profile picture
-    async postProfilePic(picBlob, handlers) {
+    async postProfilePic(picBlob: Blob, handlers: Handlers) {
         try {
             const upload = new FormData();
             upload.append("file", picBlob);
@@ -57,7 +57,7 @@ class UsersClass {
 
     // Get the bytes of my current profile picture
     // Error: 404 if no profile picture found
-    async getProfilePic(username, handlers) {
+    async getProfilePic(username: string, handlers: Handlers) {
         try {
             return await Utils.fetchApi("GET", `user/profilepicture/v1?username=${encu(username)}`);
         } catch (e) {
@@ -65,7 +65,7 @@ class UsersClass {
         }
     }
 
-    async getMyPrivateSettings(handlers) {
+    async getMyPrivateSettings(handlers: Handlers) {
         try {
             return await Utils.fetchApi("GET", `user/privatesettings/v1`);
         } catch (e) {
@@ -73,7 +73,7 @@ class UsersClass {
         }
     }
 
-    async putMyPrivateSettings(settings, handlers) {
+    async putMyPrivateSettings(settings: any, handlers: Handlers) {
         try {
             return await Utils.fetchApi("PUT", `user/privatesettings/v1`, settings);
         } catch (e) {
@@ -81,7 +81,7 @@ class UsersClass {
         }
     }
 
-    async recordMyLocation(longitute, latitude, handlers) {
+    async recordMyLocation(longitute: number, latitude: number, handlers: Handlers) {
         try {
             return await Utils.fetchApi("POST", `user/location/v1?longitute=${encu(longitute)}&latitude=${encu(latitude)}`, handlers);
         } catch (e) {
@@ -89,5 +89,4 @@ class UsersClass {
         }
     }
 }
-
 export const Users = new UsersClass();
