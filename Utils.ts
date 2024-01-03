@@ -181,7 +181,7 @@ export function ench(param: string) {
 }
 
 function replaceAll(str: string, toFind: string, replaceWith: string) {
-    while(str.includes(toFind))
+    while (str.includes(toFind))
         str = str.replace(toFind, replaceWith);
     return str;
 }
