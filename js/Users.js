@@ -90,3 +90,4 @@ class UsersClass {
     }
 }
 export const Users = new UsersClass();
+export const QnaUsers = Users;

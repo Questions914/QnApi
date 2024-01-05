@@ -1,4 +1,4 @@
-export declare class VideoRecorder {
+export declare class QnaVideoRecorder {
     width: number;
     height: number;
     onRecordingComplete: (blob: Blob) => any;

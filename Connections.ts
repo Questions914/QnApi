@@ -59,3 +59,4 @@ class ConnectionsClass {
     }
 }
 export const Connections = new ConnectionsClass();
+export const QnaConnections = Connections;

@@ -1,4 +1,4 @@
-export class VideoRecorder {
+export class QnaVideoRecorder {
     constructor(elementToInsertInto, width, height, onRecordingComplete) {
         this.width = 0;
         this.height = 0;

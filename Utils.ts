@@ -165,6 +165,7 @@ class UtilsClass {
     }
 }
 export const Utils = new UtilsClass();
+export const QnaUtils = Utils;
 
 export function encu(param: any) {
     return encodeURIComponent(param.toString());

@@ -7,3 +7,4 @@ export declare class AuthClass {
     logout(handlers: Handlers): Promise<any>;
 }
 export declare const Auth: AuthClass;
+export declare const QnaAuth: AuthClass;
