@@ -1,7 +1,7 @@
-import { Utils, Handlers, encu } from "./Utils.js";
+import { Utils, QnaHandlers, encu } from "./Utils.js";
 
 export class QnAClass {
-    async getQuestions(handlers: Handlers) {
+    async getQuestions(handlers: QnaHandlers) {
         try {
             return await Utils.fetchApi("GET", `qna/questions/v1`);
         } catch (e) {
@@ -9,7 +9,7 @@ export class QnAClass {
         }
     }
 
-    async getMyQuestions(handlers: Handlers) { /// returns robot-sorted [] of qids
+    async getMyQuestions(handlers: QnaHandlers) { /// returns robot-sorted [] of qids
         try {
             return await Utils.fetchApi("GET", `qna/questions/my/v1`);
         } catch (e) {
@@ -17,7 +17,7 @@ export class QnAClass {
         }
     }
 
-    async getQuestionCats(handlers: Handlers) {
+    async getQuestionCats(handlers: QnaHandlers) {
         try {
             return await Utils.fetchApi("GET", `qna/qcats/v1`);
         } catch (e) {
@@ -25,7 +25,7 @@ export class QnAClass {
         }
     }
 
-    async getQuestionTypes(handlers: Handlers) {
+    async getQuestionTypes(handlers: QnaHandlers) {
         try {
             return await Utils.fetchApi("GET", `qna/qtypes/v1`);
         } catch (e) {
@@ -33,7 +33,7 @@ export class QnAClass {
         }
     }
 
-    async getMyAnswers(handlers: Handlers) {
+    async getMyAnswers(handlers: QnaHandlers) {
         try {
             return await Utils.fetchApi("GET", `qna/answers/v1`);
         } catch (e) {
@@ -41,7 +41,7 @@ export class QnAClass {
         }
     }
 
-    async getMyAnswer(aid: string, handlers: Handlers) {
+    async getMyAnswer(aid: string, handlers: QnaHandlers) {
         try {
             return await Utils.fetchApi("GET", `qna/answer/v1?aid=${encu(aid)}`);
         } catch (e) {
@@ -49,7 +49,7 @@ export class QnAClass {
         }
     }
 
-    async recordAnswers(answers: any, handlers: Handlers) {
+    async recordAnswers(answers: any, handlers: QnaHandlers) {
         try {
             return await Utils.fetchApi("POST", "qna/answers/v1", answers);
         } catch (e) {
@@ -57,7 +57,7 @@ export class QnAClass {
         }
     }
 
-    async getTheirAnswers(theirUsername: string, handlers: Handlers) {
+    async getTheirAnswers(theirUsername: string, handlers: QnaHandlers) {
         try {
             return await Utils.fetchApi("GET", `qna/answers/their/v1?theirUsername=${encu(theirUsername)}`);
         } catch (e) {
@@ -65,7 +65,7 @@ export class QnAClass {
         }
     }
 
-    async getTheirAnswer(theirUsername: string, qid: number, handlers: Handlers) {
+    async getTheirAnswer(theirUsername: string, qid: number, handlers: QnaHandlers) {
         try {
             return await Utils.fetchApi("GET", `qna/answer/their/v1?theirUsername=${encu(theirUsername)}&qid=${encu(qid)}`);
         } catch (e) {
@@ -73,7 +73,7 @@ export class QnAClass {
         }
     }
 
-    async getMyUserQuestionCats(handlers: Handlers) {
+    async getMyUserQuestionCats(handlers: QnaHandlers) {
         try {
             return await Utils.fetchApi("GET", "qna/userqcats/v1");
         } catch (e) {
@@ -81,7 +81,7 @@ export class QnAClass {
         }
     }
 
-    async putMyUserQuestionCats(qQatIds: number[], handlers: Handlers) {
+    async putMyUserQuestionCats(qQatIds: number[], handlers: QnaHandlers) {
         try {
             return await Utils.fetchApi("PUT", "qna/userqcats/v1", qQatIds);
         } catch (e) {
@@ -89,7 +89,7 @@ export class QnAClass {
         }
     }
 
-    async deleteMyUserQuestionCats(qQatIds: number[], handlers: Handlers) {
+    async deleteMyUserQuestionCats(qQatIds: number[], handlers: QnaHandlers) {
         try {
             return await Utils.fetchApi("DELETE", "qna/userqcats/v1", qQatIds);
         } catch (e) {
@@ -97,7 +97,7 @@ export class QnAClass {
         }
     }
 
-    async postQuestionViews(qids: number, handlers: Handlers) {
+    async postQuestionViews(qids: number, handlers: QnaHandlers) {
         try {
             return await Utils.fetchApi("POST", "qna/qviews/v1", qids);
         } catch (e) {
@@ -105,7 +105,7 @@ export class QnAClass {
         }
     }
 
-    async getQuestionStats(qid: number, handlers: Handlers) {
+    async getQuestionStats(qid: number, handlers: QnaHandlers) {
         try {
             return await Utils.fetchApi("GET", `qna/qstats/v1?qid=${encu(qid)}`);
         } catch (e) {
@@ -113,7 +113,7 @@ export class QnAClass {
         }
     }
 
-    async postAnswerViews(aids: string[], handlers: Handlers) {
+    async postAnswerViews(aids: string[], handlers: QnaHandlers) {
         try {
             return await Utils.fetchApi("POST", "qna/answers/view/v1", aids);
         } catch (e) {
@@ -121,7 +121,7 @@ export class QnAClass {
         }
     }
 
-    async postAnswerLikes(answerLikes: any, handlers: Handlers) {
+    async postAnswerLikes(answerLikes: any, handlers: QnaHandlers) {
         try {
             return await Utils.fetchApi("POST", "qna/answers/like/v1", answerLikes);
         } catch (e) {
@@ -129,7 +129,7 @@ export class QnAClass {
         }
     }
 
-    async postQuestionLikes(questionLikes: any, handlers: Handlers) {
+    async postQuestionLikes(questionLikes: any, handlers: QnaHandlers) {
         try {
             return await Utils.fetchApi("POST", "qna/questions/like/v1", questionLikes);
         } catch (e) {
@@ -137,7 +137,7 @@ export class QnAClass {
         }
     }
 
-    async postFileAnswer(file: Blob, answer: any, handlers: Handlers) {
+    async postFileAnswer(file: Blob, answer: any, handlers: QnaHandlers) {
         try {
             const upload = new FormData();
             upload.append("answerJson", JSON.stringify(answer));
@@ -148,7 +148,7 @@ export class QnAClass {
         }
     }
 
-    async getAnswerJobStatus(aid: string, handlers: Handlers) {
+    async getAnswerJobStatus(aid: string, handlers: QnaHandlers) {
         try {
             return await Utils.fetchApi("GET", `qna/answer/jobstatus/v1?aid=${encu(aid)}`);
         } catch (e) {
@@ -156,7 +156,7 @@ export class QnAClass {
         }
     }
 
-    async getAnswerJobState(aid: string, handlers: Handlers) {
+    async getAnswerJobState(aid: string, handlers: QnaHandlers) {
         try {
             return await Utils.fetchApi("GET", `qna/answer/jobstate/v1?aid=${encu(aid)}`);
         } catch (e) {
@@ -164,7 +164,7 @@ export class QnAClass {
         }
     }
 
-    async getAnswerMediaInfo(aid: string, handlers: Handlers) {
+    async getAnswerMediaInfo(aid: string, handlers: QnaHandlers) {
         try {
             return await Utils.fetchApi("GET", `qna/answer/media/info/v1?aid=${encu(aid)}`);
         } catch (e) {
@@ -172,7 +172,7 @@ export class QnAClass {
         }
     }
 
-    async deleteAnswerMedia(aid: string, name: string, handlers: Handlers) {
+    async deleteAnswerMedia(aid: string, name: string, handlers: QnaHandlers) {
         try {
             return await Utils.fetchApi("DELETE", `qna/answer/media/v1?aid=${encu(aid)}&name=${encu(name)}`);
         } catch (e) {
@@ -180,7 +180,7 @@ export class QnAClass {
         }
     }
 
-    async getAnswerMediaData(aid: string, mediaFileId: string, handlers: Handlers) {
+    async getAnswerMediaData(aid: string, mediaFileId: string, handlers: QnaHandlers) {
         try {
             return await Utils.fetchApi("GET", `qna/answer/media/data/v1?aid=${encu(aid)}&mediaFileId=${mediaFileId}`);
         } catch (e) {
@@ -188,7 +188,7 @@ export class QnAClass {
         }
     }
 
-    async getMediaJobState(mid: string, handlers: Handlers) {
+    async getMediaJobState(mid: string, handlers: QnaHandlers) {
         try {
             return await Utils.fetchApi("GET", `qna/media/jobstate/v1?mid=${encu(mid)}`);
         } catch (e) {
@@ -196,7 +196,7 @@ export class QnAClass {
         }
     }
 
-    async getWittyReplyAudioData(aid: string, handlers: Handlers) {
+    async getWittyReplyAudioData(aid: string, handlers: QnaHandlers) {
         try {
             return await Utils.fetchApi("GET", `qna/answer/wittyreply/audio/v2?aid=${encu(aid)}`);
         } catch (e) {
@@ -204,7 +204,7 @@ export class QnAClass {
         }
     }
 
-    async getQuestionTextAudioData(qid: number, handlers: Handlers) {
+    async getQuestionTextAudioData(qid: number, handlers: QnaHandlers) {
         try {
             return await Utils.fetchApi("GET", `qna/question/text/audio/v2?qid=${encu(qid)}`);
         } catch (e) {
@@ -212,7 +212,7 @@ export class QnAClass {
         }
     }
 
-    async qid2aid(qid: number, handlers: Handlers) {
+    async qid2aid(qid: number, handlers: QnaHandlers) {
         try {
             return await Utils.fetchApi("GET", `qna/qid2aid/v1?qid=${encu(qid)}`);
         } catch (e) {

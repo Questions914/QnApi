@@ -4,7 +4,7 @@ export type QnaException = {
     msg: string;
 }
 
-export type Handlers = { [key:number]: (exception: QnaException) => any }
+export type QnaHandlers = { [key:number]: (exception: QnaException) => any }
 
 export class UtilsClass {
     outputToConsole = false;
@@ -96,7 +96,7 @@ export class UtilsClass {
         return apiUrlRoot;
     }
 
-    async handleExp(exp: any, handlers: Handlers) {
+    async handleExp(exp: any, handlers: QnaHandlers) {
         const response = exp instanceof Response ? exp as Response : null;
         const status = response && response.status ? response.status : 0;
 
