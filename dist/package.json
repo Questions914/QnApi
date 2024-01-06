@@ -1,8 +1,8 @@
 {
   "name": "qnapi",
-  "version": "1.1.5",
+  "version": "1.2.1",
   "description": "Client API for accessing the Smickr Q&A server API",
-  "main": "./js/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,5 +11,6 @@
     "url": "https://github.com/Questions914/QnApi"
   },
   "author": "Michael Balloni",
-  "license": "MIT"
+  "license": "MIT",
+  "types": "dist/qnapi.d.ts"
 }
