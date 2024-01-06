@@ -7,4 +7,5 @@ declare class ConnectionsClass {
     disconnect(username: string, handlers: Handlers): Promise<any>;
 }
 export declare const Connections: ConnectionsClass;
+export declare const QnaConnections: ConnectionsClass;
 export {};

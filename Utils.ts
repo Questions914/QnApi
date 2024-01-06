@@ -96,7 +96,7 @@ class UtilsClass {
 
     async handleExp(exp: any, handlers: Handlers) {
         const response = exp instanceof Response ? exp as Response : null;
-        const status = response && null && response.status ? response.status : 0;
+        const status = response && response.status ? response.status : 0;
 
         let msg;
         if (status && response != null)
@@ -165,6 +165,7 @@ class UtilsClass {
     }
 }
 export const Utils = new UtilsClass();
+export const QnaUtils = Utils;
 
 export function encu(param: any) {
     return encodeURIComponent(param.toString());

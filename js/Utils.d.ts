@@ -15,6 +15,7 @@ declare class UtilsClass {
     handleExp(exp: any, handlers: Handlers): Promise<any>;
 }
 export declare const Utils: UtilsClass;
+export declare const QnaUtils: UtilsClass;
 export declare function encu(param: any): string;
 export declare function ench(param: string): string;
 export {};

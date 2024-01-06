@@ -11,4 +11,5 @@ declare class UsersClass {
     recordMyLocation(longitute: number, latitude: number, handlers: Handlers): Promise<any>;
 }
 export declare const Users: UsersClass;
+export declare const QnaUsers: UsersClass;
 export {};

@@ -75,7 +75,7 @@ class UtilsClass {
     }
     async handleExp(exp, handlers) {
         const response = exp instanceof Response ? exp : null;
-        const status = response && null && response.status ? response.status : 0;
+        const status = response && response.status ? response.status : 0;
         let msg;
         if (status && response != null) {
             switch (status) {
@@ -146,6 +146,7 @@ class UtilsClass {
     }
 }
 export const Utils = new UtilsClass();
+export const QnaUtils = Utils;
 export function encu(param) {
     return encodeURIComponent(param.toString());
 }

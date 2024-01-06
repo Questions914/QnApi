@@ -1,4 +1,4 @@
-export class VideoRecorder {
+export class QnaVideoRecorder {
     width: number = 0;
     height: number = 0;
 

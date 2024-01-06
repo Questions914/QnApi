@@ -73,3 +73,4 @@ export class AuthClass {
     }
 }
 export const Auth = new AuthClass();
+export const QnaAuth = Auth;

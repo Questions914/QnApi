@@ -1,8 +1,8 @@
-import { Auth } from "./Auth.js"
-import { Connections } from "./Connections.js"
+import { Auth, QnaAuth } from "./Auth.js"
+import { Connections, QnaConnections } from "./Connections.js"
 import { QnA } from "./QnA.js"
-import { Users } from "./Users.js"
-import { Utils, ench, encu } from "./Utils.js"
-import { VideoRecorder } from "./VideoRecorder.js"
+import { Users, QnaUsers } from "./Users.js"
+import { Utils, QnaUtils, ench, encu } from "./Utils.js"
+import { QnaVideoRecorder } from "./VideoRecorder.js"
 
-export { Auth, Connections, QnA, Users, Utils, ench, encu, VideoRecorder }
+export { Auth, QnaAuth, Connections, QnaConnections, QnA, Users, QnaUsers, Utils, QnaUtils, QnaVideoRecorder, ench, encu }
