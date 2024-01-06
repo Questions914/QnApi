@@ -1,5 +1,5 @@
 import { Handlers } from "./Utils.js";
-declare class UsersClass {
+export declare class UsersClass {
     getPublicProfile(username: string, handlers: Handlers): Promise<any>;
     getMyProfileStats(handlers: Handlers): Promise<any>;
     isUsernameAvailable(username: string, handlers: Handlers): Promise<any>;
@@ -12,4 +12,4 @@ declare class UsersClass {
 }
 export declare const Users: UsersClass;
 export declare const QnaUsers: UsersClass;
-export {};
+//# sourceMappingURL=Users.d.ts.map

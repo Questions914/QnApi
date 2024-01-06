@@ -8,3 +8,4 @@ export declare class AuthClass {
 }
 export declare const Auth: AuthClass;
 export declare const QnaAuth: AuthClass;
+//# sourceMappingURL=Auth.d.ts.map

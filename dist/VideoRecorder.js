@@ -1,4 +1,7 @@
-export class QnaVideoRecorder {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.QnaVideoRecorder = void 0;
+class QnaVideoRecorder {
     constructor(elementToInsertInto, width, height, onRecordingComplete) {
         this.width = 0;
         this.height = 0;
@@ -69,3 +72,5 @@ export class QnaVideoRecorder {
         this.mediaRecorder = null;
     }
 }
+exports.QnaVideoRecorder = QnaVideoRecorder;
+//# sourceMappingURL=VideoRecorder.js.map

@@ -15,3 +15,4 @@ export declare class QnaVideoRecorder {
     startRecording(): void;
     stopRecording(): void;
 }
+//# sourceMappingURL=VideoRecorder.d.ts.map

@@ -1,5 +1,5 @@
 import { Handlers } from "./Utils.js";
-declare class ConnectionsClass {
+export declare class ConnectionsClass {
     createInvite(toName: string, handlers: Handlers): Promise<any>;
     processInvite(invite: string, handlers: Handlers): Promise<any>;
     getAll(handlers: Handlers): Promise<any>;
@@ -8,4 +8,4 @@ declare class ConnectionsClass {
 }
 export declare const Connections: ConnectionsClass;
 export declare const QnaConnections: ConnectionsClass;
-export {};
+//# sourceMappingURL=Connections.d.ts.map

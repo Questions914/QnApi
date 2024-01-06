@@ -1,5 +1,5 @@
 import { Handlers } from "./Utils.js";
-declare class QnAClass {
+export declare class QnAClass {
     getQuestions(handlers: Handlers): Promise<any>;
     getMyQuestions(handlers: Handlers): Promise<any>;
     getQuestionCats(handlers: Handlers): Promise<any>;
@@ -29,4 +29,4 @@ declare class QnAClass {
     qid2aid(qid: number, handlers: Handlers): Promise<any>;
 }
 export declare const QnA: QnAClass;
-export {};
+//# sourceMappingURL=QnA.d.ts.map

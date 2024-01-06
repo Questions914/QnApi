@@ -6,7 +6,7 @@ export type QnaException = {
 export type Handlers = {
     [key: number]: (exception: QnaException) => any;
 };
-declare class UtilsClass {
+export declare class UtilsClass {
     outputToConsole: boolean;
     fetchApi(verb: string, path: string, requestBody?: any, requestContentType?: string): Promise<any>;
     setBearerToken(token: string): void;
@@ -19,4 +19,4 @@ export declare const Utils: UtilsClass;
 export declare const QnaUtils: UtilsClass;
 export declare function encu(param: any): string;
 export declare function ench(param: string): string;
-export {};
+//# sourceMappingURL=Utils.d.ts.map

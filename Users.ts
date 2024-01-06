@@ -1,6 +1,6 @@
 import { Utils, Handlers, encu } from "./Utils.js";
 
-class UsersClass {
+export class UsersClass {
     // Get the public profile of another user
     // Errors:
     // 404: User not found

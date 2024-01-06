@@ -6,7 +6,7 @@ export type QnaException = {
 
 export type Handlers = { [key:number]: (exception: QnaException) => any }
 
-class UtilsClass {
+export class UtilsClass {
     outputToConsole = false;
 
     async fetchApi(verb: string, path: string, requestBody?: any, requestContentType?: string) {

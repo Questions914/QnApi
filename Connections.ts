@@ -1,6 +1,6 @@
 import { Utils, Handlers, encu } from "./Utils.js";
 
-class ConnectionsClass {
+export class ConnectionsClass {
     // Returns: An invite (string) for the user to give someone else to form a connection
     // toName can be anything, something easy for the user to remember as to
     // who they'll be giving the invite to

@@ -1,6 +1,6 @@
 import { Utils, Handlers, encu } from "./Utils.js";
 
-class QnAClass {
+export class QnAClass {
     async getQuestions(handlers: Handlers) {
         try {
             return await Utils.fetchApi("GET", `qna/questions/v1`);

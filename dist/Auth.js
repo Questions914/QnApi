@@ -1,5 +1,8 @@
-import { Utils, encu } from "./Utils.js";
-export class AuthClass {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.QnaAuth = exports.Auth = exports.AuthClass = void 0;
+const Utils_js_1 = require("./Utils.js");
+class AuthClass {
     // Begin user authentication by sending a code to the provided userId, 
     // which is either a phone number or an email address
     //
@@ -8,10 +11,10 @@ export class AuthClass {
     // 500: Sending user code failed
     async begin(userId, handlers) {
         try {
-            return await Utils.fetchApi("POST", `auth/begin/v1?phoneNumber=${encu(userId)}`);
+            return await Utils_js_1.Utils.fetchApi("POST", `auth/begin/v1?phoneNumber=${(0, Utils_js_1.encu)(userId)}`);
         }
         catch (e) {
-            return await Utils.handleExp(e, handlers);
+            return await Utils_js_1.Utils.handleExp(e, handlers);
         }
     }
     // Continue user authentication by taking a code provided to you by the user
@@ -26,10 +29,10 @@ export class AuthClass {
     // 404: Existing user not found for userId provided to begin(), so ready to register()
     async continue(code, handlers) {
         try {
-            return await Utils.fetchApi("POST", `auth/continue/v1?code=${encu(code)}`);
+            return await Utils_js_1.Utils.fetchApi("POST", `auth/continue/v1?code=${(0, Utils_js_1.encu)(code)}`);
         }
         catch (e) {
-            return await Utils.handleExp(e, handlers);
+            return await Utils_js_1.Utils.handleExp(e, handlers);
         }
     }
     // Register a new user with the system
@@ -42,20 +45,20 @@ export class AuthClass {
     // 409: The username is valid by taken by another user
     async register(username, birthdate, gender, handlers) {
         try {
-            return await Utils.fetchApi("POST", `auth/register/v2?username=${encu(username)}&birthdate=${encu(birthdate)}&gender=${encu(gender)}`);
+            return await Utils_js_1.Utils.fetchApi("POST", `auth/register/v2?username=${(0, Utils_js_1.encu)(username)}&birthdate=${(0, Utils_js_1.encu)(birthdate)}&gender=${(0, Utils_js_1.encu)(gender)}`);
         }
         catch (e) {
-            return await Utils.handleExp(e, handlers);
+            return await Utils_js_1.Utils.handleExp(e, handlers);
         }
     }
     // Returns: The user's username; will start with $ if not yet registered
     // Error: 404 if user not logged in
     async ping(handlers) {
         try {
-            return await Utils.fetchApi("GET", "auth/pingAuth/v1");
+            return await Utils_js_1.Utils.fetchApi("GET", "auth/pingAuth/v1");
         }
         catch (e) {
-            return await Utils.handleExp(e, handlers);
+            return await Utils_js_1.Utils.handleExp(e, handlers);
         }
     }
     // Log the user out
@@ -63,14 +66,16 @@ export class AuthClass {
     //       forcing a fresh begin() / continue() authentication to proceed
     async logout(handlers) {
         try {
-            const ret = await Utils.fetchApi("POST", "auth/logout/v1");
-            Utils.setBearerToken("");
+            const ret = await Utils_js_1.Utils.fetchApi("POST", "auth/logout/v1");
+            Utils_js_1.Utils.setBearerToken("");
             return ret;
         }
         catch (e) {
-            return await Utils.handleExp(e, handlers);
+            return await Utils_js_1.Utils.handleExp(e, handlers);
         }
     }
 }
-export const Auth = new AuthClass();
-export const QnaAuth = Auth;
+exports.AuthClass = AuthClass;
+exports.Auth = new AuthClass();
+exports.QnaAuth = exports.Auth;
+//# sourceMappingURL=Auth.js.map

@@ -1,3 +1,6 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ench = exports.encu = exports.QnaUtils = exports.Utils = exports.UtilsClass = void 0;
 class UtilsClass {
     constructor() {
         this.outputToConsole = false;
@@ -161,12 +164,14 @@ class UtilsClass {
         return our_exp;
     }
 }
-export const Utils = new UtilsClass();
-export const QnaUtils = Utils;
-export function encu(param) {
+exports.UtilsClass = UtilsClass;
+exports.Utils = new UtilsClass();
+exports.QnaUtils = exports.Utils;
+function encu(param) {
     return encodeURIComponent(param.toString());
 }
-export function ench(param) {
+exports.encu = encu;
+function ench(param) {
     const p = document.createElement('P');
     p.textContent = param;
     let str = p.innerHTML;
@@ -175,8 +180,10 @@ export function ench(param) {
     str = replaceAll(str, ' ', "&nbsp;");
     return str;
 }
+exports.ench = ench;
 function replaceAll(str, toFind, replaceWith) {
     while (str.includes(toFind))
         str = str.replace(toFind, replaceWith);
     return str;
 }
+//# sourceMappingURL=Utils.js.map
