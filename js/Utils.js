@@ -1,11 +1,15 @@
 class UtilsClass {
+    constructor() {
+        this.outputToConsole = false;
+    }
     async fetchApi(verb, path, requestBody, requestContentType) {
         let api_url_root = this.getApiUrlRoot();
         let url = api_url_root + path;
         // cache busting
         url += (url.indexOf('?') > 0 ? '&' : '?')
             + "cacheBuster=" + Math.round((new Date()).getTime());
-        console.log(`Fetch: ${verb} ${url}`);
+        if (this.outputToConsole)
+            console.log(`Fetch: ${verb} ${url}`);
         let options = {
             method: verb,
             cache: "no-store", // don't cache cache busted cache busters
@@ -24,12 +28,14 @@ class UtilsClass {
             options.body =
                 (requestContentType == "application/json") ? JSON.stringify(requestBody) : requestBody;
         }
-        console.log(`Headers sans-bearer: ${JSON.stringify(options, null, 2)}`);
+        if (this.outputToConsole)
+            console.log(`Headers sans-bearer: ${JSON.stringify(options, null, 2)}`);
         let request_token = this.getBearerToken();
         if (request_token)
             options.headers["Authorization"] = "Bearer " + request_token;
         const response = await fetch(url, options);
-        console.log(`Fetch Status: ${response.status}`);
+        if (this.outputToConsole)
+            console.log(`Fetch Status: ${response.status}`);
         if (response.status == 401) {
             this.setBearerToken("");
         }
@@ -42,10 +48,12 @@ class UtilsClass {
             throw response;
         const responseContentType = response.headers.get("content-type");
         if (!responseContentType) {
-            console.log("Fetch Content-Type: (missing)");
+            if (this.outputToConsole)
+                console.log("Fetch Content-Type: (missing)");
             return await response.text();
         }
-        console.log(`Fetch Content-Type: ${responseContentType}`);
+        if (this.outputToConsole)
+            console.log(`Fetch Content-Type: ${responseContentType}`);
         if (responseContentType.includes("json"))
             return await response.json();
         else if (responseContentType.includes("text"))
@@ -58,7 +66,7 @@ class UtilsClass {
     }
     getBearerToken() {
         let bearer_token = window.localStorage.getItem("bearerToken");
-        if (bearer_token == "null")
+        if (bearer_token == "null" || !bearer_token)
             bearer_token = null;
         return bearer_token;
     }
@@ -93,7 +101,8 @@ class UtilsClass {
                     break;
                 default:
                     msg = await response.text();
-                    console.log(`Raw error msg: ${msg}`);
+                    if (this.outputToConsole)
+                        console.log(`Raw error msg: ${msg}`);
                     if (msg.length > 0 && msg[0] == '{') {
                         try {
                             const msg_obj = JSON.parse(msg);
@@ -107,11 +116,13 @@ class UtilsClass {
                     }
                     break;
             }
-            console.log(`handleExp (response): ${status}: ${msg}`);
+            if (this.outputToConsole)
+                console.log(`handleExp (response): ${status}: ${msg}`);
         }
         else {
             msg = exp.toString();
-            console.log(`handleExp (not response): ${msg}`);
+            if (this.outputToConsole)
+                console.log(`handleExp (not response): ${msg}`);
         }
         const our_exp = {
             fetchApiExp: true,
@@ -119,29 +130,34 @@ class UtilsClass {
             msg: msg
         };
         if (!handlers) {
-            console.log("No handlers, returning error");
+            if (this.outputToConsole)
+                console.log("No handlers, returning error");
             return our_exp;
         }
         if (response) {
             const status_handler = handlers[status];
             if (status_handler) {
-                console.log("Specific status handler found");
+                if (this.outputToConsole)
+                    console.log("Specific status handler found");
                 return status_handler(our_exp);
             }
             else {
                 const default_handler = handlers[0];
                 if (default_handler) {
-                    console.log("Default status handler found");
+                    if (this.outputToConsole)
+                        console.log("Default status handler found");
                     return default_handler(our_exp);
                 }
             }
         }
         const exp_handler = handlers[-1];
         if (exp_handler) {
-            console.log("Exception handler found");
+            if (this.outputToConsole)
+                console.log("Exception handler found");
             return exp_handler(our_exp);
         }
-        console.log("No matching handler found, returning error");
+        if (this.outputToConsole)
+            console.log("No matching handler found, returning error");
         return our_exp;
     }
 }

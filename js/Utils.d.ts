@@ -7,6 +7,7 @@ export type Handlers = {
     [key: number]: (exception: QnaException) => any;
 };
 declare class UtilsClass {
+    outputToConsole: boolean;
     fetchApi(verb: string, path: string, requestBody?: any, requestContentType?: string): Promise<any>;
     setBearerToken(token: string): void;
     getBearerToken(): string | null;
