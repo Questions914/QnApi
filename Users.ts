@@ -4,7 +4,7 @@ export class UsersClass {
     // Get the public profile of another user
     // Errors:
     // 404: User not found
-    async getPublicProfile(username: string, handlers: QnaHandlers) {
+    async getPublicProfile(username: string, handlers?: QnaHandlers) {
         try {
             return await Utils.fetchApi("GET", `user/publicprofile/v1?username=${encu(username)}`);
         } catch (e) {
@@ -13,7 +13,7 @@ export class UsersClass {
     }
 
     // Get stats about the user's own public profile
-    async getMyProfileStats(handlers: QnaHandlers) {
+    async getMyProfileStats(handlers?: QnaHandlers) {
         try {
             return await Utils.fetchApi("GET", `user/profilestats/v1`);
         } catch (e) {
@@ -26,7 +26,7 @@ export class UsersClass {
     // Errors:
     // 400: Invalid username
     // 409: Username already taken
-    async isUsernameAvailable(username: string, handlers: QnaHandlers) {
+    async isUsernameAvailable(username: string, handlers?: QnaHandlers) {
         try {
             await Utils.fetchApi("GET", `user/usernameAvailable/v1?username=${encu(username)}`);
             return true;
@@ -36,7 +36,7 @@ export class UsersClass {
     }
 
     // Get my notification feed
-    async getMyNotifications(handlers: QnaHandlers) {
+    async getMyNotifications(handlers?: QnaHandlers) {
         try {
             return await Utils.fetchApi("GET", `user/notifications/v1`);
         } catch (e) {
@@ -45,7 +45,7 @@ export class UsersClass {
     }
 
     // Post a new profile picture
-    async postProfilePic(picBlob: Blob, handlers: QnaHandlers) {
+    async postProfilePic(picBlob: Blob, handlers?: QnaHandlers) {
         try {
             const upload = new FormData();
             upload.append("file", picBlob);
@@ -57,7 +57,7 @@ export class UsersClass {
 
     // Get the bytes of my current profile picture
     // Error: 404 if no profile picture found
-    async getProfilePic(username: string, handlers: QnaHandlers) {
+    async getProfilePic(username: string, handlers?: QnaHandlers) {
         try {
             return await Utils.fetchApi("GET", `user/profilepicture/v1?username=${encu(username)}`);
         } catch (e) {
@@ -65,7 +65,7 @@ export class UsersClass {
         }
     }
 
-    async getMyPrivateSettings(handlers: QnaHandlers) {
+    async getMyPrivateSettings(handlers?: QnaHandlers) {
         try {
             return await Utils.fetchApi("GET", `user/privatesettings/v1`);
         } catch (e) {
@@ -73,7 +73,7 @@ export class UsersClass {
         }
     }
 
-    async putMyPrivateSettings(settings: any, handlers: QnaHandlers) {
+    async putMyPrivateSettings(settings: any, handlers?: QnaHandlers) {
         try {
             return await Utils.fetchApi("PUT", `user/privatesettings/v1`, settings);
         } catch (e) {
@@ -81,7 +81,7 @@ export class UsersClass {
         }
     }
 
-    async recordMyLocation(longitute: number, latitude: number, handlers: QnaHandlers) {
+    async recordMyLocation(longitute: number, latitude: number, handlers?: QnaHandlers) {
         try {
             return await Utils.fetchApi("POST", `user/location/v1?longitute=${encu(longitute)}&latitude=${encu(latitude)}`, handlers);
         } catch (e) {

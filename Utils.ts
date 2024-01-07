@@ -73,7 +73,7 @@ export class UtilsClass {
     }
 
     setBearerToken(token: string) {
-        window.localStorage.setItem("bearerToken", token);
+        window.localStorage.setItem("bearerToken", token ? token : "");
     }
 
     getBearerToken() {
@@ -96,7 +96,7 @@ export class UtilsClass {
         return apiUrlRoot;
     }
 
-    async handleExp(exp: any, handlers: QnaHandlers) {
+    async handleExp(exp: any, handlers?: QnaHandlers) {
         const response = exp instanceof Response ? exp as Response : null;
         const status = response && response.status ? response.status : 0;
 
