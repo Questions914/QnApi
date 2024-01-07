@@ -4,7 +4,7 @@ export class ConnectionsClass {
     // Returns: An invite (string) for the user to give someone else to form a connection
     // toName can be anything, something easy for the user to remember as to
     // who they'll be giving the invite to
-    async createInvite(toName: string, handlers: QnaHandlers) {
+    async createInvite(toName: string, handlers?: QnaHandlers) {
         try {
             return await Utils.fetchApi("GET", `connection/invite/create/v1?toName=${encu(toName)}`);
         } catch (e) {
@@ -17,7 +17,7 @@ export class ConnectionsClass {
     // Errors:
     // 400: Invalid invite or invite not found
     // 403: Invalid request, too many tries
-    async processInvite(invite: string, handlers: QnaHandlers) {
+    async processInvite(invite: string, handlers?: QnaHandlers) {
         try {
             return await Utils.fetchApi("POST", `connection/invite/process/v1?code=${encu(invite)}`);
         } catch (e) {
@@ -26,7 +26,7 @@ export class ConnectionsClass {
     }
 
     // Get all of the users connections to other users
-    async getAll(handlers: QnaHandlers) {
+    async getAll(handlers?: QnaHandlers) {
         try {
             return await Utils.fetchApi("GET", `connection/getall/v1`);
         } catch (e) {
@@ -38,7 +38,7 @@ export class ConnectionsClass {
     //
     // Errors:
     // 404: Other user not found or no connections with the other user exists
-    async get(username: string, handlers: QnaHandlers) {
+    async get(username: string, handlers?: QnaHandlers) {
         try {
             return await Utils.fetchApi("GET", `connection/get/v1?username=${encu(username)}`);
         } catch (e) {
@@ -50,7 +50,7 @@ export class ConnectionsClass {
     //
     // Errors:
     // 404: Other user not found
-    async disconnect(username: string, handlers: QnaHandlers) {
+    async disconnect(username: string, handlers?: QnaHandlers) {
         try {
             return await Utils.fetchApi("POST", `connection/disconnect/v1?username=${encu(username)}`);
         } catch (e) {
